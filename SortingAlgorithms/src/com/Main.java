@@ -8,6 +8,7 @@ public class Main {
         //System.out.println(getMaximum(arr));
 
         //arr=selectionSort(arr);
+        arr=bubbleSort(arr);
         for (Integer element: arr){
             System.out.println(element);
         }
@@ -25,7 +26,7 @@ public class Main {
                 minimum=element;    //current element set as minimum if it's lower
             }
         }
-        return minimum;
+        return minimum; //return minimum
     }
 
     /**
@@ -40,7 +41,7 @@ public class Main {
                 maximum=element;    //current element set as maximum if it's higher
             }
         }
-        return maximum;
+        return maximum; //return maximum
     }
 
     /**
@@ -51,21 +52,30 @@ public class Main {
     public static Integer[] selectionSort(Integer[] list){
         Integer swap;   //temporary integer for storing a value to be swapped
         for(int i=0; i<list.length; i++){   //going trough the whole list
-            Integer currentMinimumIndex = i;    //storing the arrays first number as
+            Integer currentMinimumIndex = i;    //storing the arrays first number's index
 
-            for(int j=i;j<list.length; j++){
-                if(list[j]<list[currentMinimumIndex]){
-                    currentMinimumIndex=j;
+            for(int j=i;j<list.length; j++){    //going trough the whole list
+                if(list[j]<list[currentMinimumIndex]){  //check if current value is lower than the current lowest
+                    currentMinimumIndex=j;  //changin if true
                 }
             }
-            swap = list[i];
-            list[i] = list[currentMinimumIndex];
-            list[currentMinimumIndex] = swap;
+            swap = list[i]; //stroring current item to swap
+            list[i] = list[currentMinimumIndex];    //setting the current's item's value to the minimum value we found
+            list[currentMinimumIndex] = swap;   //setting the higher  value to the index which had the lowest number
         }
-        return list;
+        return list;    //return sorted list
     }
     public static Integer[] bubbleSort(Integer[] list){
         Integer swap;
+        for (int i =0; i<list.length; i++){
+            for (int j=1; j<list.length-i; j++){
+                if(list[j]<list[j-1]){
+                    swap=list[j-1];
+                    list[j-1] = list[j];
+                    list[j] = swap;
+                }
+            }
+        }
 
         return list;
     }
