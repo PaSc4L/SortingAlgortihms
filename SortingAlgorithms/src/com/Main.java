@@ -1,15 +1,18 @@
 package com;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
-        Integer[] arr = {64, 25, 12, 22, 11};   //random array to sort
+        Integer[] arr = {64, 25, 12, 111, 22, 11, };   //random array to sort
         //System.out.println(getMinimum(arr));
         //System.out.println(getMaximum(arr));
 
         //arr=selectionSort(arr);
         //arr = bubbleSort(arr);
-        arr = insertionSort(arr);
+        //arr = insertionSort(arr);
+        arr = mergeSort(arr);
         for (Integer element : arr) {
             System.out.println(element);
         }
@@ -108,7 +111,55 @@ public class Main {
         return list;
     }
 
+    /**
+     * Merge Sort
+     * @param list
+     * @return sorted list
+     */
     public static Integer[] mergeSort(Integer[] list){
+        Integer[] firstArray = Arrays.copyOfRange(list, 0, list.length/2);  //firstArray: first half of the list array
+        Integer[] secondArray = Arrays.copyOfRange(list, list.length/2, list.length);   //second half of the list array
+
+        if((firstArray.length > 1)){    //checking if the array can be divided more (it contains more than one element)
+            firstArray = mergeSort(firstArray); //calling merge sort if it can be divided even more (recursive call)
+        }if((secondArray.length > 1)){  //checking if the array can be divided more (it contains more than one element)
+            secondArray = mergeSort(secondArray);   //calling merge sort if it can be divided even more (recursive call)
+        }
+
+        Integer sizeCounter = 0;    //this will count what place we will put pur sorted value in the list
+        for(int i = 0; i<firstArray.length; i++){   //going trough the first array
+            for(int j = 0; j<secondArray.length; j++){  //going troug the second array
+                if(secondArray[j] != null){ //checking if the secondArrays value is null: this means that all values from the second array are sorted
+
+                    if(firstArray[i]<=secondArray[j] && j+1==secondArray.length){ //checnking if the first array's element is lower than the second array's element and if it is the second array's last element
+                        list[sizeCounter] = firstArray[i];  //putting the lower element to the sorted array
+                        list[sizeCounter+1] = secondArray[j];   //putting tha last element from the second array to the sorted array
+                        sizeCounter++;  //incrementing the sizeCounter
+                        break;  //breaking since the first arrays element is sorted
+
+                    }else if(firstArray[i]<=secondArray[j]){    //checking if the first array's element is lower
+                        list[sizeCounter] = firstArray[i];  //putting it in the sorted array
+                        sizeCounter++;
+                        break;  //breaking since we put an element in place
+
+                    }else if(j+1==secondArray.length){  //
+                        list[sizeCounter] = secondArray[j];
+                        list[sizeCounter+1] = firstArray[i];
+                        secondArray[j] = null;
+                        sizeCounter += 2;
+                        //we not break here because we can still compare the next element from the current array with-
+
+                    }else{
+                        list[sizeCounter] = secondArray[j];
+                        secondArray[j] = null;
+                        sizeCounter++;
+                    }
+                }else if(j+1==secondArray.length) {
+                    list[sizeCounter] = firstArray[i];
+                    sizeCounter++;
+                }
+            }
+        }
         return list;
     }
 
