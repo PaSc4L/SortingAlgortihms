@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        Integer[] arr = {64, 25, 12, 111, 22, 11, };   //random array to sort
-        //System.out.println(getMinimum(arr));
-        //System.out.println(getMaximum(arr));
+        Integer[] arr = {64, 25, 12, 111, 22, 11};   //random array to sort
+        //System.out.println("The minimum value is: " + getMinimum(arr));
+        //System.out.println("The maximum value is: " +getMaximum(arr));
 
         //arr=selectionSort(arr);
         //arr = bubbleSort(arr);
@@ -24,10 +24,11 @@ public class Main {
      * @return minimum value of an array
      */
     public static Integer getMinimum(Integer[] list){
+        //TODO: min max with while
         Integer minimum = list[0];  //first element will be the minimum automatically
-        for (Integer element:list) {    //going trough the array with a foreach
-            if(element<minimum){    //checking if current element is below minimum
-                minimum=element;    //current element set as minimum if it's lower
+        for (int i =1; i<list.length; i++) {    //going trough the array with a foreach
+            if(list[i]<minimum){    //checking if current element is below minimum
+                minimum=list[i];    //current element set as minimum if it's lower
             }
         }
         return minimum; //return minimum
@@ -40,9 +41,9 @@ public class Main {
      */
     public static Integer getMaximum(Integer[] list){
         Integer maximum = list[0];  //first element will be the maximum automatically
-        for (Integer element:list) {    //going trough the array with a foreach
-            if(element>maximum){    //checking if current element is above maximum
-                maximum=element;    //current element set as maximum if it's higher
+        for (int i =1; i<list.length; i++) {    //going trough the array with a foreach
+            if(list[i]>maximum){    //checking if current element is above maximum
+                maximum=list[i];    //current element set as maximum if it's higher
             }
         }
         return maximum; //return maximum
@@ -139,22 +140,22 @@ public class Main {
 
                     }else if(firstArray[i]<=secondArray[j]){    //checking if the first array's element is lower
                         list[sizeCounter] = firstArray[i];  //putting it in the sorted array
-                        sizeCounter++;
+                        sizeCounter++;  //element sorted: incrementing sizeCounter
                         break;  //breaking since we put an element in place
 
-                    }else if(j+1==secondArray.length){  //
-                        list[sizeCounter] = secondArray[j];
-                        list[sizeCounter+1] = firstArray[i];
-                        secondArray[j] = null;
-                        sizeCounter += 2;
+                    }else if(j+1==secondArray.length){  //checking if second arrays number is the last element in the array (meaning that it is the lowest element so both the first and second arrays elemnts needs to be sorted
+                        list[sizeCounter] = secondArray[j]; //setting the second arrays element to the sorted list
+                        list[sizeCounter+1] = firstArray[i];    //setting the first array's element to the sorted list
+                        secondArray[j] = null;  //setting already sorted number value to zero, so it won't be sorted again
+                        sizeCounter += 2;   //incrementig sizeCounter by 2 since 2 element is sorted
                         //we not break here because we can still compare the next element from the current array with-
 
-                    }else{
+                    }else{  //else: the second array's value is lower so it must be placed in the sorted array
                         list[sizeCounter] = secondArray[j];
                         secondArray[j] = null;
                         sizeCounter++;
                     }
-                }else if(j+1==secondArray.length) {
+                }else if(j+1==secondArray.length) { //if the second array is full with null values
                     list[sizeCounter] = firstArray[i];
                     sizeCounter++;
                 }
