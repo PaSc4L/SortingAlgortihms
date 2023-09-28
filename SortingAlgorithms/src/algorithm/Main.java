@@ -1,4 +1,4 @@
-package com;
+package algorithm;
 
 import java.util.Arrays;
 
@@ -12,10 +12,12 @@ public class Main {
         //arr=selectionSort(arr);
         //arr = bubbleSort(arr);
         //arr = insertionSort(arr);
-        arr = mergeSort(arr);
-        for (Integer element : arr) {
-            System.out.println(element);
-        }
+        //arr = mergeSort(arr);
+        arr = quickSort(arr);
+        System.out.println(Arrays.toString(arr));
+        //for (Integer element : arr) {
+        //   System.out.println(element);
+        //}
     }
 
     /**
@@ -164,7 +166,49 @@ public class Main {
         return list;
     }
 
-    public static Integer[] quickSort(Integer[] list){
-        return list;
+    public static Integer[] quickSort(Integer[] array){
+        int privot = array[array.length-1];
+        int i = 0;
+        Integer[] sorted = new Integer[array.length];
+        if(array.length>1) {
+
+            for (int j = 0; j < array.length - 1; j++) {
+                if (array[j] <= privot) {
+                    int swap = array[j];
+                    array[j] = array[i];
+                    array[i] = swap;
+                    i++;
+                }
+            }
+            int swapPrivot = array[i];
+            array[i] = array[array.length - 1];
+            array[array.length - 1] = swapPrivot;
+
+            Integer[] lowerNumbers = Arrays.copyOfRange(array, 0, i);
+            if (lowerNumbers.length != 0) {
+                lowerNumbers = quickSort(lowerNumbers);
+            }
+            Integer[] higherNumbers = Arrays.copyOfRange(array, i+1, array.length);
+            if (higherNumbers.length != 0) {
+                higherNumbers = quickSort(higherNumbers);
+            }
+            int j = 0;
+            for(int k = 0; k<lowerNumbers.length; k++){
+                sorted[j] = lowerNumbers[k];
+                j++;
+            }
+
+            sorted[i] = privot;
+            j++;
+            for(int k = 0; k<higherNumbers.length; k++){
+                sorted[j] = higherNumbers[k];
+                j++;
+            }
+        }else{
+            sorted[i] = privot;
+        }
+
+        return sorted;
     }
+
 }
